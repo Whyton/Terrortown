@@ -1,0 +1,57 @@
+<project name="RechteckWebService" default="release" basedir=".">
+	<property name="jaxws-version" value="2.0" />
+	<property name="jar.file" value="${ant.project.name}.jar"/>
+	<property name="generated" value="generated" />
+	<property name="generated.src" value="${generated}/src" />
+	<property name="generated.wsdl" value="${generated}/wsdl" />
+	<property name="classes.dir" value="bin" />
+	<property name="wsgen.exec" value="C:\Program Files\Java\jdk1.8.0_11\bin\wsgen" />
+		<target name="clean">
+			<delete failonerror="false" includeemptydirs="true">
+				<fileset dir="${generated.src}" />
+				<fileset dir="${generated.wsdl}" />
+				<fileset dir="release" />
+			</delete>
+			<mkdir dir="${generated}" />
+			<mkdir dir="${generated.src}" />
+			<mkdir dir="${generated.wsdl}" />
+			<mkdir dir="release"/>
+		</target>
+
+	<target name="release" depends="clean, create-service, jar" />
+
+	<target name="create-service">
+		<antcall target="create-ws">
+			<param name="portname" value="{http://www.axxg.de}RechteckWebServicePort" />
+			<param name="servicename" value="{http://www.axxg.de}RechteckWebService" />
+			<param name="classname" value="main.RechteckService" />
+		</antcall>
+	</target>
+	
+	<target name="jar">
+		<jar destfile="release/${jar.file}">
+			<zipfileset dir="${classes.dir}" includes="**/*.*" />
+		</jar>
+	</target>
+	
+	<target name="create-ws">
+		<exec executable="${wsgen.exec}">
+			<arg value="-wsdl" />
+			<arg value="-keep" />
+			<arg value="-classpath" />
+			<arg value="${classes.dir}" />
+			<arg value="-r" />
+			<arg value="${generated.wsdl}" />
+			<arg value="-s" />
+			<arg value="${generated.src}" />
+			<arg value="-d" />
+			<arg value="${classes.dir}" />
+			<arg value="-servicename" />
+			<arg value="${servicename}" />
+			<arg value="-portname" />
+			<arg value="${portname}" />
+			<arg value="${classname}" />
+		</exec>
+	</target>
+
+</project>
