@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://www.axxg.de/ws/rechteck" xmlns:tns="http://www.axxg.de/ws/rechteck" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="berechneInhalt" type="tns:berechneInhalt"/>
+
+  <xs:element name="berechneInhaltResponse" type="tns:berechneInhaltResponse"/>
+
+  <xs:element name="berechneUmfang" type="tns:berechneUmfang"/>
+
+  <xs:element name="berechneUmfangResponse" type="tns:berechneUmfangResponse"/>
+
+  <xs:element name="makeMessage" type="tns:makeMessage"/>
+
+  <xs:element name="makeMessageResponse" type="tns:makeMessageResponse"/>
+
+  <xs:complexType name="makeMessage">
+    <xs:sequence>
+      <xs:element name="n" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="makeMessageResponse">
+    <xs:sequence>
+      <xs:element name="makeMessage" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="berechneInhalt">
+    <xs:sequence>
+      <xs:element name="Laenge" type="xs:float"/>
+      <xs:element name="Breite" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="berechneInhaltResponse">
+    <xs:sequence>
+      <xs:element name="Flaecheninhalt" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="berechneUmfang">
+    <xs:sequence>
+      <xs:element name="Laenge" type="xs:float"/>
+      <xs:element name="Breite" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="berechneUmfangResponse">
+    <xs:sequence>
+      <xs:element name="Umfang" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

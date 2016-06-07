@@ -1,0 +1,46 @@
+<project name="RechteckWebServiceClient" default="release" basedir=".">
+	<property name="jaxws-version" value="2.0" />
+	<property name="jar.file" value="${ant.project.name}.jar"/>
+	<property name="generated" value="generated" />
+	<property name="generated.src" value="${generated}/src" />
+	<property name="classes.dir" value="bin" />
+	<property name="wsimport.exec" value="C:\Program Files\Java\jdk1.8.0_11\bin\wsimport" />
+
+
+	<target name="clean">
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${generated.src}" />
+		</delete>
+		<mkdir dir="${generated}" />
+		<mkdir dir="${generated.src}" />
+	</target>
+
+	<target name="release" depends="clean,create-rechteck-service, jar" />
+
+	<target name="create-rechteck-service">
+		<antcall target="create-ws">
+			<param name="package" value="de.axxg.rechteckws" />
+			<param name="wsdl.location" value="http://localhost:9202/rechteck/RechteckWebService?wsdl" />
+		</antcall>
+	</target>
+	
+	<target name="jar">
+		<jar destfile="release/${jar.file}">
+			<zipfileset dir="${classes.dir}" includes="**/*.*" />
+		</jar>
+	</target>
+
+	<target name="create-ws">
+		<exec executable="${wsimport.exec}">
+			<arg value="-s" />
+			<arg value="${generated.src}" />
+			<arg value="-d" />
+			<arg value="${classes.dir}" />
+			<arg value="-p" />
+			<arg value="${package}" />
+			<arg value="${wsdl.location}" />
+
+		</exec>
+	</target>
+
+</project>
